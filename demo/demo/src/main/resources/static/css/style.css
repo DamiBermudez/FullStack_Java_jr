@@ -1,0 +1,121 @@
+:root{
+    --primary_background_color:rgb(237,231,230);
+    --secundary_background_color:rgba(170,170,170);
+    --secundary:rgb(200,120,235);
+    --borders:rgb(144,120,235);
+    --hover : rgb(120,151,235);
+    --font-family: 'Poppins', sans-serif;
+}
+
+html {
+   
+    height: 100%;
+    position: relative;
+    
+}
+
+body {
+    max-width: 70%;
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    margin: auto;
+    background-color:var(--primary_background_color);
+    font-family: var(--font-family);
+}
+
+header{
+margin-top: 5px;
+background-color:var(--secundary);
+border-radius: 10px;
+}
+
+#logo{
+    margin-top: 5px 10px 10px 5px;
+    display: flex;
+    align-items: center;
+}
+
+#formLogin{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border-width: 1px;
+    gap: 15px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: var(--background-primary);
+}
+
+#formLogin h1{
+    text-align: center;
+}
+#formLogin input{
+    padding: 10px 15px;
+    border-radius: 6px;
+    width: 95%;
+    border: none;
+    font-family: var(--font-family);
+    background-color: var(--secundary_background_color);
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+#formLogin button{
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: var(--hover);
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+#formLogin button:hover {
+    color: var(--background-secondary);
+    background-color: var(--borders);
+}
+
+.sub_menu{
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    gap: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    
+}
+
+.icono{
+    height:40px;
+    width:40px;
+}
+
+.sub_menu>:last-child{
+    margin-left: auto;
+}
+
+.sub_menu:hover{
+    border-style: ridge;
+    border-width: 0.2px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-color: var(--borders);
+    transition: border-color 0.3s ease;
+}
+footer
+{
+    margin-top:50px;
+    width:100%;
+    height:40px;
+    background-color:var(--secundary);
+    text-align: center;
+    border-radius: 10px;
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Actualizar Hospitales</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <div id="logo">
+        <div><img src="/css/icono.svg" alt="Logotipo de un electrocardiograma" height="40px" width="40px"></div>
+        <div><p>Sistema de Gestión de Hospitales</p></div>
+    </div>
+
+
+</header>
+<main>
+    <div>
+        <h1>Eliminar Hospitales</h1>
+    </div>
+    <h2>Buscar Hospital</h2>
+    <input type="number" id="buscarId" placeholder="ID del hospital">
+    <button onclick="buscarHospital()">Buscar</button>
+
+    <hr>
+
+
+
+    <form id="formActualizar" style="display: none;">
+        <input type="hidden" id="id_hospital" />
+
+        <label for="nom_hospital">Nombre:</label>
+        <input type="text" id="nom_hospital" required><br>
+
+        <label for="id_gerente">ID Gerente:</label>
+        <input type="number" id="id_gerente" required><br>
+
+        <label for="id_condicion">ID Condición:</label>
+        <input type="number" id="id_condicion" required><br>
+
+        <label for="id_sede">ID Sede:</label>
+        <input type="number" id="id_sede" required><br>
+
+        <label for="id_distrito">ID Distrito:</label>
+        <input type="number" id="id_distrito" required><br>
+
+        <button type="button" onclick="eliminarHospital()">Eliminar</button>
+    </form>
+
+
+</main>
+
+
+<script>
+    async function buscarHospital() {
+      const id = document.getElementById("buscarId").value;
+
+      if (!id) {
+        alert("Ingresa un ID");
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/hospitales/${id}`);
+        if (!response.ok) {
+          alert("Hospital no encontrado");
+          return;
+        }
+
+        const data = await response.json();
+
+        // Rellenar los campos del formulario
+        document.getElementById("formActualizar").style.display = "block";
+        document.getElementById("id_hospital").value = data.id_hospital;
+        document.getElementById("nom_hospital").value = data.nom_hospital;
+        document.getElementById("id_gerente").value = data.id_gerente;
+        document.getElementById("id_condicion").value = data.id_condicion;
+        document.getElementById("id_sede").value = data.id_sede;
+        document.getElementById("id_distrito").value = data.id_distrito;
+
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Error al buscar hospital");
+      }
+    }
+
+    document.getElementById("formActualizar").addEventListener("submit", async function(e) {
+              e.preventDefault();
+
+              const hospital = {
+                id_hospital: document.getElementById("id_hospital").value,
+                nom_hospital: document.getElementById("nom_hospital").value,
+                id_gerente: document.getElementById("id_gerente").value,
+                id_condicion: document.getElementById("id_condicion").value,
+                id_sede: document.getElementById("id_sede").value,
+                id_distrito: document.getElementById("id_distrito").value
+              };
+
+              try {
+                const response = await fetch(`http://localhost:8080/api/hospitales/${hospital.id_hospital}`, {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(hospital)
+                });
+
+                if (response.ok) {
+                  alert("Hospital actualizado correctamente");
+                } else {
+                  alert("Error al actualizar hospital");
+                }
+              } catch (error) {
+                console.error("Error:", error);
+                alert("Error en la conexión");
+              }
+
+    async function eliminarHospital() {
+  const id = document.getElementById("id_hospital").value;
+
+  if (!id) {
+    alert("No hay hospital cargado para eliminar");
+    return;
+  }
+
+  const confirmar = confirm(`¿Estás seguro de que deseas eliminar el hospital con ID ${id}?`);
+
+  if (!confirmar) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/hospitales/${id}`, {
+      method: "DELETE"
+    });
+
+    if (response.ok) {
+      alert("Hospital eliminado correctamente");
+
+      // Ocultar el formulario y limpiar campos
+      document.getElementById("formActualizar").style.display = "none";
+      document.getElementById("formActualizar").reset();
+      document.getElementById("buscarId").value = "";
+    } else {
+      alert("Error al eliminar hospital");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error en la conexión al eliminar");
+  }
+}
+
+    });
+</script>
+
+</body>
+</html>
