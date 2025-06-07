@@ -1,6 +1,7 @@
 package com.gestionHospital.demo.controller;
 
 
+import com.gestionHospital.demo.DTO.HospitalDTO;
 import com.gestionHospital.demo.entity.Hospital;
 import com.gestionHospital.demo.repository.HospitalRepository;
 import com.gestionHospital.demo.service.HospitalService;
@@ -33,9 +34,8 @@ public class HospitalController {
     }
 
     @GetMapping("/{id}")
-    @Transactional
-    public ResponseEntity<Hospital> getHospitalById(@PathVariable int id) {
-        Hospital hospital = hospitalService.obtenerHospitalPorId(id);
+    public ResponseEntity<HospitalDTO> obtenerHospitalPorId(@PathVariable int id) {
+        HospitalDTO hospital = hospitalService.obtenerHospitalPorId(id);
         if (hospital != null) {
             return ResponseEntity.ok(hospital);
         } else {
@@ -43,5 +43,21 @@ public class HospitalController {
         }
 
 
+    }
+
+    @PutMapping("/{id}")
+    public void actualizarHospital(@PathVariable int id, @RequestBody HospitalDTO dto) {
+        dto.setIdHospital(id);
+        hospitalService.actualizarHospital(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarHospital(@PathVariable Integer id) {
+        try {
+            hospitalService.eliminarHospital(id);
+            return ResponseEntity.ok("Hospital eliminado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al eliminar hospital: " + e.getMessage());
+        }
     }
 }

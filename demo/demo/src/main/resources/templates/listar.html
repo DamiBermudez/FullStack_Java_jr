@@ -9,16 +9,94 @@
         <header>
             <div id="logo">
                 <div><img src="/css/icono.svg" alt="Logotipo de un electrocardiograma" height="40px" width="40px"></div>
-                <div><p>Sistema de Gestión de Hospitales</p></div>               
-                
+                <div><p>Sistema de Gestión de Hospitales</p></div>
+                <nav>
+                    <div><a href="home">Home</a>
+                    <a href="registrar">Nuevo</a>
+                    <a href="actualizar">Actualizar</a>
+                    <a href="eliminar">Eliminar</a></div>
+                </nav>
             </div>
 
         </header>
+
+
+
         <main>
+
+            <h2>Listar Hospital</h2>
+            <input type="number" id="buscarId" placeholder="ID del hospital">
+            <button onclick="buscarHospital()">Buscar</button>
+
+            <hr>
+
             <div>
-                <h1>Listar Hospitales está en Construcción</h1>
+                <table id="tablaHospital" style="display:none">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Hospital</th>
+                        <th>Condición</th>
+                        <th>Gerente</th>
+                        <th>Sede</th>
+                        <th>Distrito</th>
+                    </tr>
+                    </thead>
+                    <tbody id="hospitalBody">
+                    <!-- Aquí se insertarán los datos -->
+                    </tbody>
+                </table>
             </div>
         </main>
+        <script>
+
+    async function buscarHospital() {
+        const id = document.getElementById("buscarId").value;
+
+        if (!id) {
+            alert("Ingresa un ID");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/hospitales/${id}`);
+            if (!response.ok) {
+                alert("Hospital no encontrado");
+                return;
+            }
+
+            const data = await response.json();
+            console.log(data); // Para depurar
+
+            // Mostrar la tabla si la respuesta fue exitosa
+            document.getElementById("tablaHospital").style.display = "block";
+
+            // Limpiar el cuerpo de la tabla antes de agregar nuevos datos
+            const tbody = document.getElementById("hospitalBody");
+            tbody.innerHTML = "";
+
+            // Crear la fila con los datos
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${data.idHospital}</td>
+                <td>${data.hospital}</td>
+                <td>${data.condicion}</td>
+                <td>${data.gerente}</td>
+                <td>${data.sede}</td>
+                <td>${data.distrito}</td>
+            `;
+
+            tbody.appendChild(row);
+
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error al buscar hospital");
+        }
+    }
+        </script>
+
+
 
     </body>
 </html>

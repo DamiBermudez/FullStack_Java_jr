@@ -20,23 +20,33 @@ CREATE PROCEDURE SP_HOSPITAL_REGISTRAR(
 
 /*Actualizar Hospital*/
 
-CREATE PROCEDURE SP_HOSPITAL_ACTUALIZAR(
-	IN P_idHospital INT,
-    IN P_nomHospital VARCHAR(100),
-    IN P_idGerente INT,
-    IN P_idCondicion INT,
-    IN P_idSede INT,
-    IN P_idDistrito INT   
+DELIMITER //
+
+CREATE PROCEDURE SP_HOSPITAL_ACTUALIZAR (
+    IN p_id_hospital INT,
+    IN p_nom_hospital VARCHAR(100),
+    IN p_nom_condicion VARCHAR(100),
+    IN p_nom_gerente VARCHAR(100),
+    IN p_nom_sede VARCHAR(100),
+    IN p_nom_distrito VARCHAR(100)
 )
-BEGIN 
-	UPDATE Hospital 
-    SET nom_hospital =  P_nomHospital,
-		id_gerente = P_idGerente,
-        id_condicion = P_idCondicion,
-        id_sede = P_idSede,
-        id_distrito = P_idDistrito
-	WHERE id_hospital= P_idHospital;
-END; 
+BEGIN
+    UPDATE hospital h
+    JOIN gerente g ON h.id_gerente = g.id_gerente
+    JOIN condicion c ON h.id_condicion = c.id_condicion
+    JOIN sede s ON h.id_sede = s.id_sede
+    JOIN distrito d ON h.id_distrito = d.id_distrito
+    SET
+        h.nom_hospital = p_nom_hospital,
+        c.nom_condicion = p_nom_condicion,
+        g.nom_gerente = p_nom_gerente,
+        s.nom_sede = p_nom_sede,
+        d.nom_distrito = p_nom_distrito
+    WHERE h.id_hospital = p_id_hospital;
+END //
+
+DELIMITER ;
+
 //
 
 /*Eliminar Hospital*/
@@ -49,40 +59,25 @@ CREATE PROCEDURE SP_HOSPITAL_ELIMINAR(
 	END;
 //
 
-/*Listar Hospitales Dinámicamente*/
 
-CREATE PROCEDURE SP_HOSPITAL_LISTAR()
-BEGIN 
-/*variables*/
-	DECLARE done INT DEFAULT false;
-    DECLARE nomHospital VARCHAR(100);
-    DECLARE cur cursor for select nom_hospital FROM Hospital;
-    DECLARE CONTINUE handler for NOT found set done = true;
-    
-/*se crea una tabla temporal si ya existe se elimina*/
-	DROP TEMPORARY TABLE IF EXISTS tmp_hospitales;
-		CREATE TEMPORARY TABLE tmp_hospitales (
-			nomHospital VARCHAR(100)
-    );
-/*Abrir el cursor*/
-OPEN cur;
+CREATE PROCEDURE obtenerHospitalPorId(IN P_idHospital INT)
+BEGIN
+  SELECT 
+  h.id_hospital , 
+  c.nom_condicion as Condición , 
+  g.nom_gerente as Gerente, 
+  s.nom_sede as Sede , 
+  d.nom_distrito as Distrito
+  FROM hospital h
+  inner join 
+  condicion c on c.id_condicion = h.id_condicion 
+  inner join 
+  gerente g on g.id_gerente = h.id_gerente 
+  inner join sede s on s.id_sede = h.id_sede 
+  inner join distrito d on d.id_distrito = h.id_distrito  
+  where 
+  h.id_hospital = P_idHospital;
+END //
 
-/*Bucle de lectura*/
-listar_loop:loop
-fetch cur into nomHospital;
-if done THEN 
-	leave Listar_loop;
-end if;
+DELIMITER ;
 
-/*Insertar la tabla temporal*/
-INSERT INTO tmp_hospitales (nomHospital) VALUES (nomHospital);
-end loop;
-
-/*Cierro cur*/
-CLOSE cur;
-
-/*Devuelve el resultado acumulado*/
-SELECT * FROM tmp_Hospitales;
-END;
-
-DELIMITER;

@@ -36,6 +36,70 @@ border-radius: 10px;
     display: flex;
     align-items: center;
 }
+nav{
+margin-left:auto
+}
+nav>div{
+display:flex;
+}
+nav>div>a{
+text-decoration:none;
+color:black;
+padding:2px;
+}
+
+nav>div>a:hover{
+background-color:var(--hover)
+}
+
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+   }
+table,th,td{
+border: 1px solid var(--secundary_background_color);
+}
+
+th,td{
+padding:8px;
+text-align:center;
+}
+
+label {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    input[type="text"],
+    select {
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    input[type="number"],
+        select {
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+    button[type="submit"] {
+        padding: 10px;
+        background-color: var(--hover);
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: var(--borders);
+    }
 
 #formLogin{
     display: flex;

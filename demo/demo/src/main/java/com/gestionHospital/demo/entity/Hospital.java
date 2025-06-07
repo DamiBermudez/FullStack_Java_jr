@@ -18,20 +18,20 @@ import jakarta.persistence.*;
         name = "Hospital.actualizarHospital",
         procedureName = "SP_HOSPITAL_ACTUALIZAR",
         parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "P_idHospital", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "P_nomHospital", type = String.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "P_idGerente", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "P_idCondicion", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "P_idSede", type = Integer.class),
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "P_idDistrito", type = Integer.class)
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_id_hospital", type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_nom_hospital", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_nom_condicion", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_nom_gerente", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_nom_sede", type = String.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "p_nom_distrito", type = String.class)
         }
 )
 @NamedStoredProcedureQuery(
-        name = "Hospital.obtenerHospitalPorId",
-        procedureName = "obtenerHospitalPorId",
-        resultClasses = Hospital.class,
+        name = "Hospital.eliminarHospital",
+        procedureName = "SP_HOSPITAL_ELIMINAR",
         parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "P_idHospital", type = Integer.class)
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "P_idHospital", type = Integer.class),
+
         }
 )
 @Entity
@@ -39,6 +39,7 @@ import jakarta.persistence.*;
 public class Hospital {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private int id_hospital;
 
     @Column
@@ -55,6 +56,8 @@ public class Hospital {
 
     @Column
     private int id_distrito;
+
+
 
 //getters y setters
 

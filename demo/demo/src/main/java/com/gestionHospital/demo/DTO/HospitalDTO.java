@@ -1,61 +1,69 @@
 package com.gestionHospital.demo.DTO;
 
 public class HospitalDTO {
-    private int id_hospital;
-    private String nom_hospital;
-    private int id_gerente;
-    private int id_condicion;
-    private int id_sede;
-    private int id_distrito;
+    private int idHospital;
+    private String hospital;
+    private String condicion;
+    private String gerente;
+    private String sede;
+    private String distrito;
 
-    public HospitalDTO(int idHospital, String nomHospital, int idCondicion, int idDistrito, int idSede) {
+
+    public HospitalDTO(int idHospital, String hospital, String condicion, String gerente, String sede, String distrito) {
+        this.idHospital = idHospital;
+        this.condicion = condicion;
+        this.gerente = gerente;
+        this.hospital = hospital;
+        this.sede = sede;
+        this.distrito = distrito;
     }
 
-    public int getId_hospital() {
-        return id_hospital;
+    public int getIdHospital() {
+        return idHospital;
     }
 
-    public void setId_hospital(int id_hospital) {
-        this.id_hospital = id_hospital;
+    public String getCondicion() {
+        return condicion;
     }
 
-    public String getNom_hospital() {
-        return nom_hospital;
+    public String getHospital() {
+        return hospital;
     }
 
-    public void setNom_hospital(String nom_hospital) {
-        this.nom_hospital = nom_hospital;
+    public String getGerente() {
+        return gerente;
     }
 
-    public int getId_gerente() {
-        return id_gerente;
+    public String getDistrito() {
+        return distrito;
     }
 
-    public void setId_gerente(int id_gerente) {
-        this.id_gerente = id_gerente;
+    public String getSede() {
+        return sede;
     }
 
-    public int getId_condicion() {
-        return id_condicion;
+    public void setIdHospital(int idHospital) {
+        this.idHospital = idHospital;
     }
 
-    public void setId_condicion(int id_condicion) {
-        this.id_condicion = id_condicion;
+    public void setHospital(String hospital) {
+        this.hospital = hospital;
     }
 
-    public int getId_sede() {
-        return id_sede;
+    public void setDistrito(String distrito) {
+        this.distrito = distrito;
     }
 
-    public void setId_sede(int id_sede) {
-        this.id_sede = id_sede;
+    public void setCondicion(String condicion) {
+        this.condicion = condicion;
     }
 
-    public int getId_distrito() {
-        return id_distrito;
+    public void setSede(String sede) {
+        this.sede = sede;
     }
 
-    public void setId_distrito(int id_distrito) {
-        this.id_distrito = id_distrito;
+    public void setGerente(String gerente) {
+        this.gerente = gerente;
     }
 }
+
